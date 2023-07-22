@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "erobot"
+version = "0.1.0"
+description = ""
+authors = ["jenkins <liyongqi@cheeselove.cn>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+graia-ariadne = {extras = ["standard"], version = "^0.11.5"}
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
