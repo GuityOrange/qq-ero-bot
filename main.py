@@ -1,3 +1,4 @@
+from datetime import datetime
 from creart import create
 from graia.ariadne.app import Ariadne
 from graia.ariadne.connection.config import (
@@ -6,16 +7,16 @@ from graia.ariadne.connection.config import (
     config,
 )
 from graia.ariadne.event.message import GroupMessage
-from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.element import Plain
-from graia.ariadne.message.element import Image
-from graia.ariadne.model import Group
 from graia.broadcast import Broadcast
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Forward, ForwardNode, Image
+from graia.ariadne.model import Group, Member
 
 bcc = create(Broadcast)
 app = Ariadne(
     connection=config(
-        574306394,  # 你的机器人的 qq 号
+        2621582133,  # 你的机器人的 qq 号
         "GraiaxVerifyKey",  # 填入你的 mirai-api-http 配置中的 verifyKey
         # 以下两行（不含注释）里的 host 参数的地址
         # 是你的 mirai-api-http 地址中的地址与端口
@@ -29,7 +30,13 @@ app = Ariadne(
 
 
 @bcc.receiver(GroupMessage)
-async def setu(app: Ariadne, group: Group, message: MessageChain):
+async def setu(app: Ariadne, group: Group, message: MessageChain, member: Member):
+    if message.display == "ping":
+        await app.send_message(
+            group,
+            MessageChain([Plain("pong")]),
+        )
+
     if message.display == "来点壁纸":
         import os
         import random
@@ -86,8 +93,6 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
             group,
             MessageChain(url),
         )
-
-
 
 
 app.launch_blocking()
