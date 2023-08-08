@@ -17,6 +17,7 @@ bcc = create(Broadcast)
 app = Ariadne(
     connection=config(
         2621582133,  # 你的机器人的 qq 号
+        # 574306394,  # 你的机器人的 qq 号
         "GraiaxVerifyKey",  # 填入你的 mirai-api-http 配置中的 verifyKey
         # 以下两行（不含注释）里的 host 参数的地址
         # 是你的 mirai-api-http 地址中的地址与端口
@@ -41,6 +42,19 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, member: Member
         import os
         import random
         folder_path = r"D:\INS\wallpaper"
+        file_names = os.listdir(folder_path)
+        random_file_name = random.choice(file_names)
+        random_file_path = os.path.join(folder_path, random_file_name)
+        random_file_url = random_file_path.replace("\\", "/")
+        await app.send_message(
+            group,
+            MessageChain([Image(path=random_file_url)]),
+        )
+
+    if message.display == "无内鬼":
+        import os
+        import random
+        folder_path = r"D:\INS\telegram\photos"
         file_names = os.listdir(folder_path)
         random_file_name = random.choice(file_names)
         random_file_path = os.path.join(folder_path, random_file_name)
@@ -82,6 +96,22 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, member: Member
             MessageChain([Image(path=save_path)]),
         )
 
+    if message.display == '摸鱼':
+        import os
+        import requests
+        import json
+        save_dir = r"D:\INS\moyu"
+        url = r'https://api.vvhan.com/api/moyu'
+        file_name = os.path.basename(url)
+        save_path = os.path.join(save_dir, file_name)
+        response = requests.get(url)
+        with open(save_path, 'wb') as f:
+            f.write(response.content)
+        await app.send_message(
+            group,
+            MessageChain([Image(path=save_path)]),
+        )
+
     if message.display == 'nsfw':
         import os
         import requests
@@ -92,6 +122,18 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, member: Member
         await app.send_message(
             group,
             MessageChain(url),
+        )
+
+    if message.display == 'd2':
+        await app.send_message(
+            group,
+            MessageChain([Plain(str(random.randint(0, 1)))]),
+        )
+
+    if message.display == 'd100':
+        await app.send_message(
+            group,
+            MessageChain([Plain(str(random.randint(0, 100)))]),
         )
 
 
