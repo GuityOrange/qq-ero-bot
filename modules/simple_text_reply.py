@@ -1,4 +1,5 @@
 from creart import create
+import re
 
 from graia.broadcast import Broadcast
 from graia.ariadne import Ariadne
@@ -18,7 +19,7 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
             MessageChain([Plain("pong")]),
         )
 
-    if message.display == '回答':
+    if re.search(r'(.*)回答(.*)', message.display):
         import random
         rnt = '是' if random.randint(1, 2) == 1 else '否'
         await app.send_message(
