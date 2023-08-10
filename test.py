@@ -1,19 +1,9 @@
-# https://api.waifu.pics/nsfw/waifu
-import os
-import requests
-import json
-response = requests.get("https://api.waifu.pics/sfw/waifu")
-save_dir = r"D:\INS\pic"
-data = json.loads(response.text)
-url = data["url"]
-print('url', url)
+file_path = r'D:\INS\nsfw-pic\_gCmk_-.jpg'
 
-# 从URL中解析出图片文件名
-file_name = os.path.basename(url)
-# 拼接保存图片的完整路径
-save_path = os.path.join(save_dir, file_name)
-# 发送HTTP请求并保存图片到本地
-response = requests.get(url)
-with open(save_path, 'wb') as f:
-    f.write(response.content)
-print(save_path)
+import cv2
+# 读取图片文件
+img = cv2.imread(file_path)
+# 倒转图片
+img_flip = cv2.flip(img, 0)
+# 保存倒转后的图片
+cv2.imwrite(file_path, img_flip)

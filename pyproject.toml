@@ -11,6 +11,9 @@ graia-ariadne = {extras = ["standard"], version = "^0.11.5"}
 requests = "^2.31.0"
 opencv-python = "^4.8.0.74"
 pillow = "^10.0.0"
+telethon = "^1.28.5"
+aiofile = "^3.8.7"
+pysocks = "^1.7.1"
 
 
 [build-system]
