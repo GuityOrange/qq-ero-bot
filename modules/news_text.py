@@ -11,7 +11,7 @@ bcc = create(Broadcast)
 
 
 @bcc.receiver(GroupMessage)
-async def setu(app: Ariadne, group: Group, message: MessageChain):
+async def news(app: Ariadne, group: Group, message: MessageChain):
     if message.display == "今日新闻":
         import requests
         import json

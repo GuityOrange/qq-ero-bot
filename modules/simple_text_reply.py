@@ -12,7 +12,7 @@ bcc = create(Broadcast)
 
 
 @bcc.receiver(GroupMessage)
-async def setu(app: Ariadne, group: Group, message: MessageChain):
+async def simple_answer(app: Ariadne, group: Group, message: MessageChain):
     if message.display == "ping":
         await app.send_message(
             group,
