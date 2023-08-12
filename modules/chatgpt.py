@@ -69,11 +69,7 @@ async def gpt(app: Ariadne, group: Group, message: MessageChain, member: Member)
         )
 
     # 模拟群友随机回复，1/20概率，只有在可用条数大于一半时才会回复
-    if len(message.display) > 0:
-        global chat_record
-        save_chat_record(member.name, message.display)
-        if random.randint(1, 15) != 1:
-            return
+    if len(message.display) > 0 and random.randint(1, 20) == 1:
         # 本小时次数已用完
         reachable, used_count = is_under_limit(LIMIT)
         if not reachable or used_count > LIMIT // 2:
@@ -83,8 +79,7 @@ async def gpt(app: Ariadne, group: Group, message: MessageChain, member: Member)
         chatbot = Chatbot(config={
             "access_token": access_token
         })
-        prompt = '你现在是一个群聊成员，你需要根据群友说的话来回应，回应需要简短，而且不能有标点符号，若你不清楚群友说的话的意义，可以回答类似“确实”，“是这样的”等摸棱两可的回应。群友的对话记录为：'
-        prompt += get_chat_record()
+        prompt = '你现在是一个群聊成员，你需要根据群友说的话来回应，回应需要简短，而且不能有标点符号，若你不清楚群友说的话的意义，可以回答类似“确实”，“是这样的”等摸棱两可的回应。群友的对话为：' + message.display
         response = ""
         get_response(chatbot, prompt)
 
