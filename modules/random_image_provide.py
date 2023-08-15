@@ -26,6 +26,19 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
             MessageChain([Image(path=random_file_url)]),
         )
 
+    if message.display == "插画":
+        import os
+        import random
+        folder_path = r"D:\INS\pixiv"
+        file_names = os.listdir(folder_path)
+        random_file_name = random.choice(file_names)
+        random_file_path = os.path.join(folder_path, random_file_name)
+        random_file_url = random_file_path.replace("\\", "/")
+        await app.send_message(
+            group,
+            MessageChain([Image(path=random_file_url)]),
+        )
+
     if message.display == "无内鬼":
         import os
         import random
