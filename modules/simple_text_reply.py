@@ -19,7 +19,7 @@ async def simple_answer(app: Ariadne, group: Group, message: MessageChain):
             MessageChain([Plain("pong")]),
         )
 
-    if re.search(r'(.*)回答(.*)', message.display):
+    if message.display == "回答":
         import random
         rnt = '是' if random.randint(1, 2) == 1 else '否'
         await app.send_message(
