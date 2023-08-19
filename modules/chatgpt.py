@@ -11,11 +11,15 @@ from revChatGPT.V1 import Chatbot
 from persistence.gpt_limit import is_under_limit
 
 from config import access_token
+
 bcc = create(Broadcast)
 LIMIT = 50
 response = ''
 chat_record = []
-
+continue_chatbot = Chatbot(config={
+    "access_token": access_token
+})
+continue_time = 0
 
 def save_chat_record(person, sentence):
     global chat_record
@@ -42,7 +46,7 @@ def get_response(chatbot, prompt):
 
 @bcc.receiver(GroupMessage)
 async def gpt(app: Ariadne, group: Group, message: MessageChain, member: Member):
-    global response
+    global response, continue_time, continue_chatbot
     if len(message.display) > 3 and message.display[:3] == 'gpt':
         # 本小时次数已用完
         reachable, used_count = is_under_limit(LIMIT)
@@ -87,3 +91,36 @@ async def gpt(app: Ariadne, group: Group, message: MessageChain, member: Member)
             group,
             MessageChain([Plain(response)]),
         )
+
+    if len(message.display) > 2 and message.display[:2] == '对话':
+        # 本小时次数已用完
+        reachable, used_count = is_under_limit(LIMIT)
+        if not reachable:
+            await app.send_message(
+                group,
+                MessageChain([Plain(f"本小时次数已用完({used_count}/{LIMIT})")]),
+            )
+            return
+
+        if continue_time > 20:
+            continue_time = 0
+            continue_chatbot = Chatbot(config={
+                "access_token": access_token
+            })
+        continue_time += 1
+        get_response(continue_chatbot, message.display[2:])
+        await app.send_message(
+            group,
+            MessageChain([Plain(response + f'({used_count}/{LIMIT})' + f'({continue_time}/20)')]),
+        )
+
+    if message.display == '刷新对话':
+        continue_time = 0
+        continue_chatbot = Chatbot(config={
+            "access_token": access_token
+        })
+        await app.send_message(
+            group,
+            MessageChain([Plain('对话已刷新')]),
+        )
+
