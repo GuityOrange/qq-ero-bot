@@ -1,8 +1,9 @@
 from creart import create
+import asyncio
 
 from graia.broadcast import Broadcast
 from graia.ariadne import Ariadne
-from graia.ariadne.event.message import GroupMessage
+from graia.ariadne.event.message import GroupMessage, MessageEvent
 from graia.ariadne.model import Group
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.message.element import Plain
@@ -12,7 +13,7 @@ bcc = create(Broadcast)
 
 
 @bcc.receiver(GroupMessage)
-async def setu(app: Ariadne, group: Group, message: MessageChain):
+async def setu(app: Ariadne, group: Group, message: MessageChain, event: MessageEvent):
     if message.display == "来点壁纸":
         import os
         import random
@@ -21,10 +22,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         random_file_name = random.choice(file_names)
         random_file_path = os.path.join(folder_path, random_file_name)
         random_file_url = random_file_path.replace("\\", "/")
-        await app.send_message(
+        bot_message = await app.send_message(
             group,
             MessageChain([Image(path=random_file_url)]),
         )
+        await asyncio.sleep(60)
+        await app.recall_message(bot_message)
+        await app.recall_message(event.source)
 
     if message.display == "插画":
         import os
@@ -34,10 +38,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         random_file_name = random.choice(file_names)
         random_file_path = os.path.join(folder_path, random_file_name)
         random_file_url = random_file_path.replace("\\", "/")
-        await app.send_message(
+        bot_message = await app.send_message(
             group,
             MessageChain([Image(path=random_file_url)]),
         )
+        await asyncio.sleep(60)
+        await app.recall_message(bot_message)
+        await app.recall_message(event.source)
 
     if message.display == "无内鬼":
         import os
@@ -47,10 +54,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         random_file_name = random.choice(file_names)
         random_file_path = os.path.join(folder_path, random_file_name)
         random_file_url = random_file_path.replace("\\", "/")
-        await app.send_message(
+        bot_message = await app.send_message(
             group,
             MessageChain([Image(path=random_file_url)]),
         )
+        await asyncio.sleep(60)
+        await app.recall_message(bot_message)
+        await app.recall_message(event.source)
 
     if message.display == "猫猫":
         import os
@@ -60,10 +70,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         random_file_name = random.choice(file_names)
         random_file_path = os.path.join(folder_path, random_file_name)
         random_file_url = random_file_path.replace("\\", "/")
-        await app.send_message(
+        bot_message = await app.send_message(
             group,
             MessageChain([Image(path=random_file_url)]),
         )
+        await asyncio.sleep(60)
+        await app.recall_message(bot_message)
+        await app.recall_message(event.source)
 
     if message.display == 'sfw':
         import os
@@ -78,10 +91,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         response = requests.get(url)
         with open(save_path, 'wb') as f:
             f.write(response.content)
-        await app.send_message(
+        bot_message = await app.send_message(
             group,
             MessageChain([Image(path=save_path)]),
         )
+        await asyncio.sleep(60)
+        await app.recall_message(bot_message)
+        await app.recall_message(event.source)
 
     if message.display == 'nsfw':
         import os
