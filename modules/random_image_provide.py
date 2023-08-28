@@ -42,9 +42,9 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, event: Message
             group,
             MessageChain([Image(path=random_file_url)]),
         )
-        await asyncio.sleep(60)
-        await app.recall_message(bot_message)
-        await app.recall_message(event.source)
+        # await asyncio.sleep(60)
+        # await app.recall_message(bot_message)
+        # await app.recall_message(event.source)
 
     if message.display == "无内鬼":
         import os
@@ -58,9 +58,9 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, event: Message
             group,
             MessageChain([Image(path=random_file_url)]),
         )
-        await asyncio.sleep(60)
-        await app.recall_message(bot_message)
-        await app.recall_message(event.source)
+        # await asyncio.sleep(60)
+        # await app.recall_message(bot_message)
+        # await app.recall_message(event.source)
 
     if message.display == "猫猫":
         import os
@@ -74,9 +74,9 @@ async def setu(app: Ariadne, group: Group, message: MessageChain, event: Message
             group,
             MessageChain([Image(path=random_file_url)]),
         )
-        await asyncio.sleep(60)
-        await app.recall_message(bot_message)
-        await app.recall_message(event.source)
+        # await asyncio.sleep(60)
+        # await app.recall_message(bot_message)
+        # await app.recall_message(event.source)
 
     if message.display == 'sfw':
         import os
